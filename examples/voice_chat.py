@@ -86,14 +86,12 @@ def echo(text_input):
         logger.error(f"Error in echo: {e}", exc_info=True)
         yield None
 
-# Configure turn detection options
+# Configure turn detection and VAD options
 turn_options = TurnDetectorOptions(
     model_name="model_preprocessed.onnx" if not os.getenv("USE_QUANTIZED_MODEL", "true").lower() == "true" else "model_quantized.onnx",
     audio_chunk_duration=3.0,     
     turn_end_threshold=0.5,  
 )
-
-# Configure VAD options with lower threshold
 vad_options = SileroVadOptions(
     threshold=0.4,  
     min_speech_duration_ms=250,
@@ -102,10 +100,8 @@ vad_options = SileroVadOptions(
     speech_pad_ms=200            
 )
 
-# Create the FastAPI app first
+# Create the FastAPI app and stream
 app = FastAPI()
-
-# Create the stream with our handler
 stream = Stream(
     handler=TurnDetector(
         echo,
