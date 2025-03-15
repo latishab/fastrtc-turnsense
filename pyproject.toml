@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "fastrtc-turnsense"
 dynamic = ["version"]
-description = "A lightweight end-of-utterance detection model fine-tuned on SmolLM2-135M, optimized for Raspberry Pi and low-power devices."
+description = "A turn-taking detection system for conversational AI built on top of FastRTC."
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}

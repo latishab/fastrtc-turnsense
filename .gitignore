@@ -37,6 +37,8 @@ ENV/
 # Project specific
 models/
 *.onnx
+.gradio/
+test.webp
 
 # Logs
 *.log
