@@ -24,9 +24,7 @@ import librosa
 import asyncio
 from typing import cast
 from time import time
-from difflib import SequenceMatcher
-from typing import List, Tuple
-
+from typing import List
 from fastrtc.reply_on_pause import (
     AlgoOptions,
     AppState,
@@ -58,7 +56,6 @@ logger.setLevel(logging.INFO)
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(ColorFormatter('%(levelname)s: %(message)s'))
 logger.handlers = [console_handler]
-
 
 @dataclass
 class TurnDetectorOptions(AlgoOptions):
