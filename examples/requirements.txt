@@ -1,0 +1,9 @@
+gradio
+fastapi>=0.100.0
+python-dotenv>=1.0.0
+openai>=1.0.0
+fastrtc[stt,tts,vad]>=0.0.15rc1
+torch>=2.0.0
+torchaudio>=2.0.0
+fastrtc-turnsense>=0.1.0
+librosa>=0.10.0  

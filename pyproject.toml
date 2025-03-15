@@ -1,0 +1,70 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fastrtc-turnsense"
+dynamic = ["version"]
+description = "A lightweight end-of-utterance detection model fine-tuned on SmolLM2-135M, optimized for Raspberry Pi and low-power devices."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Latisha Besariani HENDRA", email = "latishabesariani@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+    "onnxruntime>=1.15.0",
+    "transformers>=4.30.0",
+    "huggingface-hub>=0.16.0",
+    "numpy>=1.24.0",
+    "fastrtc[vad,stt]>=0.0.15"
+]
+
+[project.urls]
+Documentation = "https://github.com/latishab/fastrtc-turnsense#readme"
+Issues = "https://github.com/latishab/fastrtc-turnsense/issues"
+Source = "https://github.com/latishab/fastrtc-turnsense"
+
+[tool.hatch.version]
+path = "src/fastrtc_turnsense/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+    "mypy>=1.0.0",
+]
+
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/fastrtc_turnsense tests}"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fastrtc_turnsense"]
+
+[tool.coverage.run]
+source_pkgs = ["fastrtc_turnsense"]
+branch = true
+parallel = true
+omit = [
+    "src/fastrtc_turnsense/__about__.py",
+]
+
+[tool.coverage.paths]
+fastrtc_turnsense = ["src/fastrtc_turnsense", "*/site-packages/fastrtc_turnsense"]
+tests = ["tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "no cov",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
