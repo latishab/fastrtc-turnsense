@@ -113,10 +113,12 @@ class TurnDetector(ReplyOnPause):
 
     def _initialize_state(self):
         """Initialize or reset state variables."""
-        self.state = AppState()
+        if not hasattr(self, 'state'):
+            self.state = AppState()
         self.state.stream = None
         self.state.sampling_rate = self.input_sample_rate
-        self.state.last_text = ""
+        self.state.last_text = getattr(self.state, 'last_text', '')
+        return self.state
 
     def warmup(self) -> None:
         """Initialize the turn detection model."""
@@ -213,12 +215,6 @@ class TurnDetector(ReplyOnPause):
             self.model,
         )
 
-    def _preserve_state(self, new_state: AppState):
-        """Preserve custom state fields when state is recreated."""
-        new_state.last_text = getattr(self.state, 'last_text', '')
-        new_state.sampling_rate = self.input_sample_rate
-        return new_state
-
     def emit(self):
         """Override emit to pass only the text."""
         if not self.event.is_set():
@@ -238,7 +234,7 @@ class TurnDetector(ReplyOnPause):
                     self.generator = self.fn(*self.latest_args)
                 else:
                     self.generator = self.fn(text)
-                self.state = self._preserve_state(self.state.new())
+                self.state = self._initialize_state()
             self.state.responding = True
             try:
                 if self.is_async:
